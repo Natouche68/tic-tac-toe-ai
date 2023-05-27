@@ -1,0 +1,11 @@
+{
+  "version": "2",
+  "remote": {
+    "https://deno.land/x/colorify@1.0.5/lib/bg.ts": "d93f448c140e17d5291bd53474215c528fd441d41bf2aa42a90c4acad3b39965",
+    "https://deno.land/x/colorify@1.0.5/lib/fg.ts": "69ef6abaa56126af7100c1512e935c33acb2b96ec9e98de3dbbd4c8ceb06d785",
+    "https://deno.land/x/colorify@1.0.5/lib/stack.ts": "1e2cb8df0f8a9170eecf8f94d1109d9dfe8f044afdac6d6a19a3e02962e3c166",
+    "https://deno.land/x/colorify@1.0.5/lib/styles.ts": "f233f1e13fc9feed89e611f172241863a7eb7be7d4bfcf3f24b864ad710e27eb",
+    "https://deno.land/x/colorify@1.0.5/mod.ts": "9ae8bc66faa45ea6eb5c7e01a639dff169b2ef07db3259deb537d1295320b754",
+    "https://deno.land/x/colorify@1.0.5/more/vars.ts": "11807e25e455843b414aabfdf727ecf42de546398767140475fcb4a8681b1ade"
+  }
+}
