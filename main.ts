@@ -103,15 +103,56 @@ async function chooseCasePlayer() {
 
   renderTicTacToeArena();
 
+  const moveSelectedCaseUp = () => {
+    selectedCaseY--;
+    if (selectedCaseY === -1) {
+      selectedCaseY = 2;
+    }
+
+    if (ticTacToeArena[selectedCaseY][selectedCaseX] !== " ") {
+      moveSelectedCaseUp();
+    }
+  };
+
+  const moveSelectedCaseDown = () => {
+    selectedCaseY++;
+    if (selectedCaseY === 3) {
+      selectedCaseY = 0;
+    }
+
+    if (ticTacToeArena[selectedCaseY][selectedCaseX] !== " ") {
+      moveSelectedCaseDown();
+    }
+  };
+
+  const moveSelectedCaseLeft = () => {
+    selectedCaseX--;
+    if (selectedCaseX === -1) {
+      selectedCaseX = 2;
+    }
+
+    if (ticTacToeArena[selectedCaseY][selectedCaseX] !== " ") {
+      moveSelectedCaseLeft();
+    }
+  };
+
+  const moveSelectedCaseRight = () => {
+    selectedCaseX++;
+    if (selectedCaseX === 3) {
+      selectedCaseX = 0;
+    }
+
+    if (ticTacToeArena[selectedCaseY][selectedCaseX] !== " ") {
+      moveSelectedCaseRight();
+    }
+  };
+
   for await (const keypress of readKeypress()) {
     switch (keypress.key) {
       case "up":
         ticTacToeArena[selectedCaseY][selectedCaseX] = " ";
 
-        selectedCaseY--;
-        if (selectedCaseY === -1) {
-          selectedCaseY = 2;
-        }
+        moveSelectedCaseUp();
         ticTacToeArena[selectedCaseY][selectedCaseX] = "•";
 
         renderTitle();
@@ -121,10 +162,7 @@ async function chooseCasePlayer() {
       case "down":
         ticTacToeArena[selectedCaseY][selectedCaseX] = " ";
 
-        selectedCaseY++;
-        if (selectedCaseY === 3) {
-          selectedCaseY = 0;
-        }
+        moveSelectedCaseDown();
         ticTacToeArena[selectedCaseY][selectedCaseX] = "•";
 
         renderTitle();
@@ -134,10 +172,7 @@ async function chooseCasePlayer() {
       case "left":
         ticTacToeArena[selectedCaseY][selectedCaseX] = " ";
 
-        selectedCaseX--;
-        if (selectedCaseX === -1) {
-          selectedCaseX = 2;
-        }
+        moveSelectedCaseLeft();
         ticTacToeArena[selectedCaseY][selectedCaseX] = "•";
 
         renderTitle();
@@ -147,10 +182,7 @@ async function chooseCasePlayer() {
       case "right":
         ticTacToeArena[selectedCaseY][selectedCaseX] = " ";
 
-        selectedCaseX++;
-        if (selectedCaseX === 3) {
-          selectedCaseX = 0;
-        }
+        moveSelectedCaseRight();
         ticTacToeArena[selectedCaseY][selectedCaseX] = "•";
 
         renderTitle();
