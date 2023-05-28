@@ -29,6 +29,16 @@ while (!isGameOver) {
 
     currentPlayer = "player";
   }
+
+  const winResult = checkIfWin();
+
+  if (winResult === "o") {
+    console.log("The player wins !");
+    isGameOver = true;
+  } else if (winResult === "x") {
+    console.log("The AI wins !");
+    isGameOver = true;
+  }
 }
 
 function renderTitle() {
@@ -166,4 +176,69 @@ async function chooseCaseAI() {
 
   await sleep(3000);
   return;
+}
+
+function checkIfWin(): " " | "o" | "x" {
+  const winPatterns = [
+    [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+    ],
+    [
+      [1, 0],
+      [1, 1],
+      [1, 2],
+    ],
+    [
+      [2, 0],
+      [2, 1],
+      [2, 2],
+    ],
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0],
+    ],
+    [
+      [0, 1],
+      [1, 1],
+      [2, 1],
+    ],
+    [
+      [0, 2],
+      [1, 2],
+      [2, 2],
+    ],
+    [
+      [0, 0],
+      [1, 1],
+      [2, 2],
+    ],
+    [
+      [0, 2],
+      [1, 1],
+      [2, 0],
+    ],
+  ];
+
+  let returnedValue: " " | "o" | "x" = " ";
+
+  winPatterns.forEach((winPattern) => {
+    const firstCase = ticTacToeArena[winPattern[0][0]][winPattern[0][1]];
+    const secondCase = ticTacToeArena[winPattern[1][0]][winPattern[1][1]];
+    const thirdCase = ticTacToeArena[winPattern[2][0]][winPattern[2][1]];
+
+    if (firstCase !== " ") {
+      if (firstCase === secondCase && firstCase === thirdCase) {
+        if (firstCase === "o") {
+          returnedValue = "o";
+        } else if (firstCase === "x") {
+          returnedValue = "x";
+        }
+      }
+    }
+  });
+
+  return returnedValue;
 }
