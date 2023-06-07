@@ -2,6 +2,7 @@ import type { TicTacToeCase } from "./types.ts";
 import { gameState, readKeypress } from "./globalVariables.ts";
 import {
   checkIfWin,
+  numberToArenaCoords,
   renderTicTacToeArena,
   renderTitle,
   sleep,
@@ -175,18 +176,96 @@ async function chooseCasePlayer() {
         renderTicTacToeArena();
         break;
 
+      case "1":
+        if (await updateTicTacToeArenaForPlayer(numberToArenaCoords(1))) {
+          return;
+        }
+        break;
+
+      case "2":
+        if (await updateTicTacToeArenaForPlayer(numberToArenaCoords(2))) {
+          return;
+        }
+        break;
+
+      case "3":
+        if (await updateTicTacToeArenaForPlayer(numberToArenaCoords(3))) {
+          return;
+        }
+        break;
+
+      case "4":
+        if (await updateTicTacToeArenaForPlayer(numberToArenaCoords(4))) {
+          return;
+        }
+        break;
+
+      case "5":
+        if (await updateTicTacToeArenaForPlayer(numberToArenaCoords(5))) {
+          return;
+        }
+        break;
+
+      case "6":
+        if (await updateTicTacToeArenaForPlayer(numberToArenaCoords(6))) {
+          return;
+        }
+        break;
+
+      case "7":
+        if (await updateTicTacToeArenaForPlayer(numberToArenaCoords(7))) {
+          return;
+        }
+        break;
+
+      case "8":
+        if (await updateTicTacToeArenaForPlayer(numberToArenaCoords(8))) {
+          return;
+        }
+        break;
+
+      case "9":
+        if (await updateTicTacToeArenaForPlayer(numberToArenaCoords(9))) {
+          return;
+        }
+        break;
+
       case "return":
-        gameState
-          .ticTacToeArena[gameState.selectedCaseY][gameState.selectedCaseX] =
-            "o";
-        gameState.selectedCaseX = -1;
-        gameState.selectedCaseY = -1;
-
-        renderTitle();
-        renderTicTacToeArena();
-
-        await sleep(1000);
-        return;
+        if (
+          await updateTicTacToeArenaForPlayer({
+            y: gameState.selectedCaseY,
+            x: gameState.selectedCaseX,
+          })
+        ) {
+          return;
+        }
+        break;
     }
+  }
+}
+
+async function updateTicTacToeArenaForPlayer(
+  coords: { y: number; x: number },
+): Promise<boolean> {
+  if (
+    gameState.ticTacToeArena[coords.y][coords.x] === " " ||
+    gameState.ticTacToeArena[coords.y][coords.x] === "•"
+  ) {
+    gameState.ticTacToeArena[gameState.selectedCaseY][gameState.selectedCaseX] =
+      " ";
+
+    gameState
+      .ticTacToeArena[coords.y][coords.x] = "o";
+    gameState.selectedCaseX = -1;
+    gameState.selectedCaseY = -1;
+
+    renderTitle();
+    renderTicTacToeArena();
+
+    await sleep(1000);
+
+    return true;
+  } else {
+    return false;
   }
 }
