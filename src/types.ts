@@ -11,6 +11,13 @@ export type AIPrediction = {
   completed: boolean;
 };
 
+export type AIPredictionRanking = {
+  moveY: number;
+  moveX: number;
+  averageScore: number;
+  predictions: AIPrediction[];
+};
+
 export type GameState = {
   ticTacToeArena: TicTacToeCase[][];
 
@@ -20,5 +27,5 @@ export type GameState = {
   selectedCaseY: number;
   selectedCaseX: number;
 
-  rankedAIPredictions: AIPrediction[];
+  rankedAIPredictions: AIPredictionRanking[];
 };

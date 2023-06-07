@@ -30,7 +30,7 @@ export async function chooseCaseAI() {
 
     newPrediction.arena[newPrediction.aiMove.y][newPrediction.aiMove.x] = "x";
 
-    if (checkIfWin(newPrediction.arena) == "x") {
+    if (checkIfWin(newPrediction.arena) === "x") {
       newPrediction.completed = true;
       newPrediction.score = 10 - newPrediction.depth;
     }
@@ -40,9 +40,10 @@ export async function chooseCaseAI() {
 
   predictPlayerMoves(aiPredictions, 8);
 
-  gameState.ticTacToeArena[gameState.rankedAIPredictions[0].aiMove.y][
-    gameState.rankedAIPredictions[0].aiMove.x
-  ] = "x";
+  gameState
+    .ticTacToeArena[gameState.rankedAIPredictions[0].moveY][
+      gameState.rankedAIPredictions[0].moveX
+    ] = "x";
 
   renderTicTacToeArena();
 
@@ -58,7 +59,7 @@ export function predictPlayerMoves(
   if (predictionDepth !== 0) {
     const newAIPredictions: AIPrediction[] = [];
 
-    aiPredictions.forEach((prediction, index) => {
+    aiPredictions.forEach((prediction) => {
       if (!prediction.completed) {
         const newEmptyCases = getEmptyCases(prediction.arena);
 
@@ -76,16 +77,13 @@ export function predictPlayerMoves(
 
           newPrediction.arena[newEmptyCases[i].y][newEmptyCases[i].x] = "o";
 
-          if (checkIfWin(newPrediction.arena) == "o") {
+          if (checkIfWin(newPrediction.arena) === "o") {
             newPrediction.completed = true;
             newPrediction.score = -10;
           }
 
           newAIPredictions.push(newPrediction);
         }
-
-        prediction.completed = true;
-        aiPredictions.splice(index, 1);
       } else {
         newAIPredictions.push(prediction);
       }
@@ -104,7 +102,7 @@ export function predictAIMoves(
   if (predictionDepth !== 0) {
     const newAIPredictions: AIPrediction[] = [];
 
-    aiPredictions.forEach((prediction, index) => {
+    aiPredictions.forEach((prediction) => {
       if (!prediction.completed) {
         const newEmptyCases = getEmptyCases(prediction.arena);
 
@@ -122,16 +120,13 @@ export function predictAIMoves(
 
           newPrediction.arena[newEmptyCases[i].y][newEmptyCases[i].x] = "x";
 
-          if (checkIfWin(newPrediction.arena) == "x") {
+          if (checkIfWin(newPrediction.arena) === "x") {
             newPrediction.completed = true;
             newPrediction.score = 10 - newPrediction.depth;
           }
 
           newAIPredictions.push(newPrediction);
         }
-
-        prediction.completed = true;
-        aiPredictions.splice(index, 1);
       } else {
         newAIPredictions.push(prediction);
       }

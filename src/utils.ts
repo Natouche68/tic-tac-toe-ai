@@ -41,12 +41,175 @@ export function renderTicTacToeArena() {
   console.log("");
 }
 
+export function arenaCoordsToNumber(y: number, x: number): number {
+  switch (y) {
+    case 0:
+      switch (x) {
+        case 0:
+          return 1;
+
+        case 1:
+          return 2;
+
+        case 2:
+          return 3;
+
+        default:
+          return 0;
+      }
+
+    case 1:
+      switch (x) {
+        case 0:
+          return 4;
+
+        case 1:
+          return 5;
+
+        case 2:
+          return 6;
+
+        default:
+          return 0;
+      }
+
+    case 2:
+      switch (x) {
+        case 0:
+          return 7;
+
+        case 1:
+          return 8;
+
+        case 2:
+          return 9;
+
+        default:
+          return 0;
+      }
+
+    default:
+      return 0;
+  }
+}
+
+export function numberToArenaCoords(number: number): { y: number; x: number } {
+  switch (number) {
+    case 1:
+      return { y: 0, x: 0 };
+
+    case 2:
+      return { y: 0, x: 1 };
+
+    case 3:
+      return { y: 0, x: 2 };
+
+    case 4:
+      return { y: 1, x: 0 };
+
+    case 5:
+      return { y: 1, x: 1 };
+
+    case 6:
+      return { y: 1, x: 2 };
+
+    case 7:
+      return { y: 2, x: 0 };
+
+    case 8:
+      return { y: 2, x: 1 };
+
+    case 9:
+      return { y: 2, x: 2 };
+
+    default:
+      return { y: -1, x: -1 };
+  }
+}
+
 export function rankPredictions(aiPredictions: AIPrediction[]) {
-  aiPredictions.sort((a, b) => {
-    return b.score - a.score;
+  gameState.rankedAIPredictions = [
+    {
+      moveY: 0,
+      moveX: 0,
+      averageScore: 0,
+      predictions: [],
+    },
+    {
+      moveY: 0,
+      moveX: 1,
+      averageScore: 0,
+      predictions: [],
+    },
+    {
+      moveY: 0,
+      moveX: 2,
+      averageScore: 0,
+      predictions: [],
+    },
+    {
+      moveY: 1,
+      moveX: 0,
+      averageScore: 0,
+      predictions: [],
+    },
+    {
+      moveY: 1,
+      moveX: 1,
+      averageScore: 0,
+      predictions: [],
+    },
+    {
+      moveY: 1,
+      moveX: 2,
+      averageScore: 0,
+      predictions: [],
+    },
+    {
+      moveY: 2,
+      moveX: 0,
+      averageScore: 0,
+      predictions: [],
+    },
+    {
+      moveY: 2,
+      moveX: 1,
+      averageScore: 0,
+      predictions: [],
+    },
+    {
+      moveY: 2,
+      moveX: 2,
+      averageScore: 0,
+      predictions: [],
+    },
+  ];
+
+  aiPredictions.forEach((aiPrediction) => {
+    gameState
+      .rankedAIPredictions[
+        arenaCoordsToNumber(aiPrediction.aiMove.y, aiPrediction.aiMove.x) - 1
+      ].predictions.push(aiPrediction);
   });
 
-  gameState.rankedAIPredictions = aiPredictions;
+  gameState.rankedAIPredictions.forEach((predictionGroup) => {
+    let totalScore = 0;
+
+    predictionGroup.predictions.forEach((aiPrediction) => {
+      totalScore += aiPrediction.score;
+    });
+
+    if (totalScore !== 0 && predictionGroup.predictions.length !== 0) {
+      predictionGroup.averageScore = totalScore /
+        predictionGroup.predictions.length;
+    } else {
+      predictionGroup.averageScore = -1000;
+    }
+  });
+
+  gameState.rankedAIPredictions.sort((a, b) => {
+    return b.averageScore - a.averageScore;
+  });
 }
 
 export function checkIfWin(arena: TicTacToeCase[][]): " " | "o" | "x" {
