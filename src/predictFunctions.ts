@@ -1,4 +1,4 @@
-import type { AIPrediction } from "./utils.ts";
+import type { AIPrediction } from "./types.ts";
 import { gameState } from "./globalVariables.ts";
 import {
   checkIfWin,

@@ -1,17 +1,5 @@
+import type { AIPrediction, TicTacToeCase } from "./types.ts";
 import { crayon, gameState } from "./globalVariables.ts";
-
-export type TicTacToeCase = " " | "x" | "o" | "•";
-
-export type AIPrediction = {
-  aiMove: {
-    y: number;
-    x: number;
-  };
-  arena: TicTacToeCase[][];
-  score: number;
-  depth: number;
-  completed: boolean;
-};
 
 export const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 

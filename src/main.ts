@@ -1,4 +1,4 @@
-import type { TicTacToeCase } from "./utils.ts";
+import type { TicTacToeCase } from "./types.ts";
 import { gameState, readKeypress } from "./globalVariables.ts";
 import {
   checkIfWin,
