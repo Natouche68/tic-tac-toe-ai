@@ -57,10 +57,13 @@ export function predictPlayerMoves(
   predictionDepth: number,
 ) {
   if (predictionDepth !== 0) {
-    const newAIPredictions: AIPrediction[] = [];
+    let newAIPredictions: AIPrediction[] = [];
 
     aiPredictions.forEach((prediction) => {
       if (!prediction.completed) {
+        let addNewPredictions = true;
+        let foundVeryBadPrediction = true;
+        const newPredictionsfromCurrentPrediction: AIPrediction[] = [];
         const newEmptyCases = getEmptyCases(prediction.arena);
 
         for (let i = 0; i < newEmptyCases.length; i++) {
@@ -80,9 +83,22 @@ export function predictPlayerMoves(
           if (checkIfWin(newPrediction.arena) === "o") {
             newPrediction.completed = true;
             newPrediction.score = -10;
+            addNewPredictions = false;
+          } else {
+            foundVeryBadPrediction = false;
+            newPredictionsfromCurrentPrediction.push(newPrediction);
           }
+        }
 
-          newAIPredictions.push(newPrediction);
+        if (addNewPredictions) {
+          newAIPredictions = [
+            ...newAIPredictions,
+            ...newPredictionsfromCurrentPrediction,
+          ];
+        } else {
+          prediction.completed = true;
+          prediction.score = foundVeryBadPrediction ? -50 : -20;
+          newAIPredictions.push(prediction);
         }
       } else {
         newAIPredictions.push(prediction);
