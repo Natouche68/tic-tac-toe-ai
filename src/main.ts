@@ -1,5 +1,5 @@
 import type { TicTacToeCase } from "./types.ts";
-import { gameState, readKeypress } from "./globalVariables.ts";
+import { crayon, gameState, readKeypress } from "./globalVariables.ts";
 import {
   checkIfWin,
   numberToArenaCoords,
@@ -25,10 +25,10 @@ while (!gameState.isGameOver) {
   const winResult = checkIfWin(gameState.ticTacToeArena);
 
   if (winResult === "o") {
-    console.log("The player wins !");
+    console.log(crayon.bgGreen(crayon.white("The player wins !")));
     gameState.isGameOver = true;
   } else if (winResult === "x") {
-    console.log("The AI wins !");
+    console.log(crayon.bgRed(crayon.white("The AI wins !")));
     gameState.isGameOver = true;
   }
 }

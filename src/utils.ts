@@ -13,7 +13,7 @@ export function renderTitle() {
   console.log("");
 
   if (gameState.currentPlayer === "player") {
-    console.log(crayon.bgLightGreen("It's the player's turn."));
+    console.log(crayon.bgGreen("It's the player's turn."));
   } else if (gameState.currentPlayer === "ai") {
     console.log(crayon.bgRed("It's the AI's turn."));
   }
@@ -39,6 +39,16 @@ export function renderTicTacToeArena() {
     } `,
   );
   console.log("");
+
+  if (gameState.currentPlayer === "player") {
+    console.log(crayon.italic(crayon.green("Arrow keys to select a case")));
+    console.log(crayon.italic(crayon.green("Enter to validate")));
+    console.log(
+      crayon.italic(
+        crayon.green("1-2-3-4-5-6-7-8-9 to select a specific case"),
+      ),
+    );
+  }
 }
 
 export function arenaCoordsToNumber(y: number, x: number): number {

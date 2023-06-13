@@ -1,5 +1,5 @@
 import type { AIPrediction } from "./types.ts";
-import { gameState } from "./globalVariables.ts";
+import { crayon, gameState } from "./globalVariables.ts";
 import {
   checkIfWin,
   getEmptyCases,
@@ -16,6 +16,16 @@ export async function chooseCaseAI() {
   gameState.bestAIMove = { y: -1, x: -1 };
 
   const emptyCases = getEmptyCases(gameState.ticTacToeArena);
+  if (emptyCases.length === 0) {
+    gameState.isGameOver = true;
+
+    console.log("");
+    console.log(
+      crayon.bgBlue(crayon.white("It's a draw ! No more place left.")),
+    );
+
+    return;
+  }
 
   for (let i = 0; i < emptyCases.length; i++) {
     const newPrediction: AIPrediction = {
