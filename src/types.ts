@@ -5,6 +5,10 @@ export type AIPrediction = {
     y: number;
     x: number;
   };
+  lastPlayerMove: {
+    y: number;
+    x: number;
+  };
   arena: TicTacToeCase[][];
   score: number;
   depth: number;
@@ -28,4 +32,5 @@ export type GameState = {
   selectedCaseX: number;
 
   rankedAIPredictions: AIPredictionRanking[];
+  bestAIMove: { y: number; x: number };
 };

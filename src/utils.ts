@@ -210,6 +210,11 @@ export function rankPredictions(aiPredictions: AIPrediction[]) {
   gameState.rankedAIPredictions.sort((a, b) => {
     return b.averageScore - a.averageScore;
   });
+
+  if (gameState.bestAIMove.y === -1 && gameState.bestAIMove.x === -1) {
+    gameState.bestAIMove.y = gameState.rankedAIPredictions[0].moveY;
+    gameState.bestAIMove.x = gameState.rankedAIPredictions[0].moveX;
+  }
 }
 
 export function checkIfWin(arena: TicTacToeCase[][]): " " | "o" | "x" {

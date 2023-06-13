@@ -17,4 +17,5 @@ export const gameState: GameState = {
   selectedCaseX: -1,
 
   rankedAIPredictions: [],
+  bestAIMove: { y: -1, x: -1 },
 };

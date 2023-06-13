@@ -13,6 +13,7 @@ export async function chooseCaseAI() {
   renderTitle();
 
   const aiPredictions: AIPrediction[] = [];
+  gameState.bestAIMove = { y: -1, x: -1 };
 
   const emptyCases = getEmptyCases(gameState.ticTacToeArena);
 
@@ -21,6 +22,10 @@ export async function chooseCaseAI() {
       aiMove: {
         y: emptyCases[i].y,
         x: emptyCases[i].x,
+      },
+      lastPlayerMove: {
+        y: -1,
+        x: -1,
       },
       arena: structuredClone(gameState.ticTacToeArena),
       score: 0,
@@ -40,10 +45,8 @@ export async function chooseCaseAI() {
 
   predictPlayerMoves(aiPredictions, 8);
 
-  gameState
-    .ticTacToeArena[gameState.rankedAIPredictions[0].moveY][
-      gameState.rankedAIPredictions[0].moveX
-    ] = "x";
+  gameState.ticTacToeArena[gameState.bestAIMove.y][gameState.bestAIMove.x] =
+    "x";
 
   renderTicTacToeArena();
 
@@ -62,7 +65,7 @@ export function predictPlayerMoves(
     aiPredictions.forEach((prediction) => {
       if (!prediction.completed) {
         let addNewPredictions = true;
-        let foundVeryBadPrediction = true;
+        let numberOfBadPredictions = 0;
         const newPredictionsfromCurrentPrediction: AIPrediction[] = [];
         const newEmptyCases = getEmptyCases(prediction.arena);
 
@@ -71,6 +74,10 @@ export function predictPlayerMoves(
             aiMove: {
               y: prediction.aiMove.y,
               x: prediction.aiMove.x,
+            },
+            lastPlayerMove: {
+              y: newEmptyCases[i].y,
+              x: newEmptyCases[i].x,
             },
             arena: structuredClone(prediction.arena),
             score: 0,
@@ -84,8 +91,16 @@ export function predictPlayerMoves(
             newPrediction.completed = true;
             newPrediction.score = -10;
             addNewPredictions = false;
+            numberOfBadPredictions += 1;
+
+            if (
+              predictionDepth === 8 && gameState.bestAIMove.y === -1 &&
+              gameState.bestAIMove.x === -1
+            ) {
+              gameState.bestAIMove.y = newPrediction.lastPlayerMove.y;
+              gameState.bestAIMove.x = newPrediction.lastPlayerMove.x;
+            }
           } else {
-            foundVeryBadPrediction = false;
             newPredictionsfromCurrentPrediction.push(newPrediction);
           }
         }
@@ -97,7 +112,16 @@ export function predictPlayerMoves(
           ];
         } else {
           prediction.completed = true;
-          prediction.score = foundVeryBadPrediction ? -50 : -20;
+
+          if (
+            (numberOfBadPredictions > 1 || newEmptyCases.length === 2) &&
+            gameState.bestAIMove.y === -1 && gameState.bestAIMove.x === -1
+          ) {
+            gameState.bestAIMove.y = prediction.lastPlayerMove.y;
+            gameState.bestAIMove.x = prediction.lastPlayerMove.x;
+          }
+
+          prediction.score = -50;
           newAIPredictions.push(prediction);
         }
       } else {
@@ -127,6 +151,10 @@ export function predictAIMoves(
             aiMove: {
               y: prediction.aiMove.y,
               x: prediction.aiMove.x,
+            },
+            lastPlayerMove: {
+              y: prediction.lastPlayerMove.y,
+              x: prediction.lastPlayerMove.x,
             },
             arena: structuredClone(prediction.arena),
             score: 0,
