@@ -1,6 +1,10 @@
 {
 	"tasks": {
 		"dev": "deno run --watch src/main.ts",
-		"start": "deno run src/main.ts"
+		"start": "deno run src/main.ts",
+		"build-win": "deno compile --output bin/tic-tac-toe-ai-win.exe --target x86_64-pc-windows-msvc src/main.ts",
+		"build-linux": "deno compile --output bin/tic-tac-toe-ai-linux --target x86_64-unknown-linux-gnu src/main.ts",
+		"build-mac64": "deno compile --output bin/tic-tac-toe-ai-mac64 --target x86_64-apple-darwin src/main.ts",
+		"build-mac-arm": "deno compile --output bin/tic-tac-toe-ai-mac-arm --target aarch64-apple-darwin src/main.ts"
 	}
 }
